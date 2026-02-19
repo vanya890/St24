@@ -1,0 +1,357 @@
+
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Noto Sans', 'Roboto', sans-serif;
+    background-color: #f4f7f9;
+    color: #333;
+    line-height: 1.6;
+}
+
+#root {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* --- Header & Controls Styles --- */
+header {
+    background-color: #2c3e50;
+    color: #ecf0f1;
+    padding: 15px 0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    position: relative;
+    z-index: 100;
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.header-title {
+    margin: 0;
+    font-size: 1.5em;
+    font-weight: 500;
+}
+
+.header-controls {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.header-divider {
+    width: 1px;
+    height: 20px;
+    background-color: rgba(255,255,255,0.2);
+}
+
+/* Persistence Control */
+.data-persistence-control {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 5px 15px;
+    background-color: rgba(255,255,255,0.1);
+    border-radius: 20px;
+    font-size: 0.9em;
+    flex-wrap: wrap;
+}
+
+.data-persistence-control button {
+    padding: 5px 12px;
+    font-size: 0.85em;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+/* Cloud Control */
+.cloud-control-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    position: relative; /* Context for button positioning */
+    flex-wrap: wrap;
+}
+
+.cloud-btn {
+    border: none;
+    color: white;
+    padding: 5px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: opacity 0.2s;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+.cloud-btn:hover { opacity: 0.9; transform: translateY(-1px); }
+.cloud-btn:active { transform: translateY(0); }
+.cloud-btn:disabled { background-color: #ccc !important; cursor: not-allowed; transform: none; box-shadow: none;}
+
+/* Unified Modal Style for ALL screens (Desktop & Mobile) */
+.cloud-config-popover {
+    position: fixed; /* Fixed relative to viewport */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Center perfectly */
+    width: 90vw; /* Use viewport width units */
+    max-width: 450px; /* Slightly wider max-width for desktop comfort */
+    max-height: 85vh; /* Prevent overflowing screen height */
+    overflow-y: auto; /* Allow scrolling content */
+    z-index: 10001; /* Very high z-index */
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    overflow-wrap: break-word;
+    color: #333; /* Explicitly set text color to dark */
+    
+    /* Dark Backdrop trick using massive box-shadow */
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2), 0 0 0 100vmax rgba(0,0,0,0.6); 
+}
+
+.cloud-config-popover h4 {
+    margin-top: 0;
+}
+
+/* --- Mobile Responsiveness --- */
+@media (max-width: 768px) {
+    .header-container {
+        flex-direction: column;
+        align-items: stretch;
+        text-align: center;
+    }
+    
+    .header-controls {
+        justify-content: center;
+        width: 100%;
+    }
+    
+    .header-divider {
+        display: none;
+    }
+
+    .data-persistence-control, .cloud-control-container {
+        width: 100%;
+        justify-content: center;
+    }
+
+    /* Minor adjustments for mobile */
+    .cloud-config-popover {
+        padding: 15px;
+        width: 95vw;
+    }
+}
+
+/* Tabs System */
+.tabs-navigation {
+    display: flex;
+    justify-content: center;
+    background-color: #34495e;
+    padding: 10px 0;
+    gap: 15px;
+    flex-wrap: wrap; 
+}
+
+.tab-button {
+    background: transparent;
+    color: #bdc3c7;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1em;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.3s;
+    font-weight: 500;
+}
+
+.tab-button:hover {
+    color: white;
+    background-color: rgba(255,255,255,0.1);
+}
+
+.tab-button.active {
+    color: white;
+    background-color: #3498db;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+main {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    padding-top: 20px;
+}
+
+.columns-container {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+@media (min-width: 1024px) {
+    .columns-container {
+        flex-direction: row;
+    }
+    .input-column {
+        flex: 1;
+        min-width: 400px;
+    }
+    .output-column {
+        flex: 2;
+        min-width: 0;
+    }
+}
+
+.card {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 25px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.card h2 {
+    margin-top: 0;
+    color: #34495e;
+    font-size: 1.4em;
+    border-bottom: 2px solid #f1f1f1;
+    padding-bottom: 12px;
+    margin-bottom: 20px;
+}
+
+/* Trend Analysis Styles */
+.trend-dashboard {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+}
+
+.trend-table-container {
+    overflow-x: auto;
+    margin-top: 15px;
+}
+
+.trend-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    font-size: 0.9em;
+}
+
+.trend-table th, .trend-table td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+}
+
+.trend-table th {
+    background-color: #f8f9fa;
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+.trend-table tr:nth-child(even) {
+    background-color: #fcfcfc;
+}
+
+.chart-container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #eee;
+    height: 400px;
+}
+
+.export-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.btn-export {
+    font-size: 0.85em;
+    padding: 8px 15px;
+}
+
+.btn-export.json { background-color: #e67e22; }
+.btn-export.xml { background-color: #9b59b6; }
+
+/* Existing components styles adjustment */
+.form-group { margin-bottom: 20px; }
+.form-group label { display: block; margin-bottom: 8px; font-weight: 600; }
+
+/* Updated inputs to enforce text color (fixing white-on-white in Header) */
+textarea, input[type="text"], input[type="number"], select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    box-sizing: border-box;
+    color: #333; /* Force dark text */
+    background-color: #fff; /* Force white background */
+}
+
+/* Updated buttons to have a default visible style */
+button {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: opacity 0.2s;
+    background-color: #3498db; /* Default Blue */
+    color: white; /* Default White text */
+}
+
+button:hover:not(:disabled) { opacity: 0.9; }
+button:disabled { background-color: #ccc; cursor: not-allowed; }
+
+/* Cancel button specific style */
+.cancel-button {
+    background-color: #e74c3c !important;
+}
+.cancel-button:hover {
+    background-color: #c0392b !important;
+}
+
+.loading-spinner {
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid #3498db;
+    border-radius: 50%;
+    width: 16px;
+    height: 16px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+footer {
+    text-align: center;
+    padding: 20px;
+    font-size: 0.9em;
+    color: #7f8c8d;
+    background-color: #ecf0f1;
+    margin-top: auto;
+}
